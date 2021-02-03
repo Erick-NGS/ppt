@@ -10,6 +10,29 @@ const COMP_WIN = 'Machine wins!';
 
 let gameIsRunning = false;
 
+startGameBtn.addEventListener('click', () => {
+  if (gameIsRunning) {
+    return;
+  }
+  gameIsRunning = true;
+  console.log('Game starting...');
+  const playerSelection = getPlayerMove();
+  const computerChoice = compChoice();
+  const winner = getWinner(computerChoice, playerSelection);
+  let msg = `Player chose ${playerSelection} / Machine chose ${computerChoice}.\nResult => `;
+  if (winner === DRAW) {
+    msg = msg + DRAW;
+  } else if (winner === PLAYER_WIN) {
+    msg = msg + PLAYER_WIN;
+  } else {
+    msg = msg + COMP_WIN;
+  }
+
+  alert(msg);
+  gameIsRunning = false;
+});
+
+
 const getPlayerMove = () => {
   const selection = prompt(
     `${ROCK} / ${PAPER} / ${SCISSORS} ?`,
@@ -33,6 +56,7 @@ const compChoice = () => {
   }
 };
 
+
 const getWinner = (cChoice, pChoice) =>
   cChoice === pChoice
     ? DRAW
@@ -52,25 +76,3 @@ const getWinner = (cChoice, pChoice) =>
 // } else {
 //   return COMP_WIN;
 // }
-
-startGameBtn.addEventListener('click', () => {
-  if (gameIsRunning) {
-    return;
-  }
-  gameIsRunning = true;
-  console.log('Game starting...');
-  const playerSelection = getPlayerMove();
-  const computerChoice = compChoice();
-  const winner = getWinner(computerChoice, playerSelection);
-  let msg = `Player chose ${playerSelection} / Machine chose ${computerChoice}.\nResult => `;
-  if (winner === DRAW) {
-    msg = msg + DRAW;
-  } else if (winner === PLAYER_WIN) {
-    msg = msg + PLAYER_WIN;
-  } else {
-    msg = msg + COMP_WIN;
-  }
-
-  alert(msg);
-  gameIsRunning = false;
-});
