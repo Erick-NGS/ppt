@@ -7,6 +7,8 @@ const DEFAULT_CHOICE = ROCK;
 const DRAW = 'DRAW';
 const PLAYER_WIN = 'Player wins!';
 const COMP_WIN = 'Machine wins!';
+const SUM_OP = 'ADD';
+const SUB_OP = 'SUBSTRACTION';
 
 let gameIsRunning = false;
 
@@ -43,30 +45,61 @@ startGameBtn.addEventListener('click', () => {
 
 // CALC
 
-const sumUp = (cb, ...nums) => {
+const calc = (cb, op, ...nums) => {
   const valNum = number => {
     return isNaN(number) ? 0 : number;
   };
   let sum = 0;
   for (const number of nums) {
-    sum += valNum(number);
+    if (op === SUM_OP) {
+      sum += valNum(number);
+    } else {
+      sum -= valNum(number);
+    }
   }
   cb(sum);
 };
 
-const subtractUp = (cb, ...nums) => {
-  let sum = 0;
-  for (const number of nums) {
-    sum -= number;
-  }
-  cb(sum);
-};
+// const subtractUp = (cb, ...nums) => {
+//   let sum = 0;
+//   for (const number of nums) {
+//     sum -= number;
+//   }
+//   cb(sum);
+// };
 
-const showRes = (res, msg) => alert(`${msg}: ${res}`);
+const showRes = (msg, res) => alert(`${msg}: ${res}`);
 
-sumUp(showRes, 1, 5, 'fdsa', -3, 6, 10);
-sumUp(showRes, 1, 5, 10, -3, 6, 10, 25, 88);
-subtractUp(showRes, 1, 10, 15, 20);
+calc(
+  showRes.bind(this, 'Result of adding all numbers'),
+  'ADD',
+  1,
+  5,
+  'fdsa',
+  -3,
+  6,
+  10
+);
+calc(
+  showRes.bind(this, 'Result of adding all numbers'),
+  'ADD',
+  1,
+  5,
+  10,
+  -3,
+  6,
+  10,
+  25,
+  88
+);
+calc(
+  showRes.bind(this, 'Result of subtracting all numbers'),
+  'SUBSTRACTION',
+  1,
+  10,
+  15,
+  20
+);
 
 // CALC
 
