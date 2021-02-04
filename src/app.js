@@ -18,8 +18,17 @@ startGameBtn.addEventListener('click', () => {
   console.log('Game starting...');
   const playerSelection = getPlayerMove();
   const computerChoice = compChoice();
-  const winner = getWinner(computerChoice, playerSelection);
-  let msg = `Player chose ${playerSelection} / Machine chose ${computerChoice}.\nResult => `;
+  let winner;
+
+  if (playerSelection) {
+    winner = getWinner(computerChoice, playerSelection);
+  } else {
+    winner = getWinner(computerChoice, playerSelection);
+  }
+
+  let msg = `Player chose ${
+    playerSelection || DEFAULT_CHOICE
+  } / Machine chose ${computerChoice}.\nResult => `;
   if (winner === DRAW) {
     msg = msg + DRAW;
   } else if (winner === PLAYER_WIN) {
@@ -32,6 +41,36 @@ startGameBtn.addEventListener('click', () => {
   gameIsRunning = false;
 });
 
+// CALC
+
+const sumUp = (cb, ...nums) => {
+  const valNum = number => {
+    return isNaN(number) ? 0 : number;
+  };
+  let sum = 0;
+  for (const number of nums) {
+    sum += valNum(number);
+  }
+  cb(sum);
+};
+
+const subtractUp = (cb, ...nums) => {
+  let sum = 0;
+  for (const number of nums) {
+    sum -= number;
+  }
+  cb(sum);
+};
+
+const showRes = (res, msg) => alert(`${msg}: ${res}`);
+
+sumUp(showRes, 1, 5, 'fdsa', -3, 6, 10);
+sumUp(showRes, 1, 5, 10, -3, 6, 10, 25, 88);
+subtractUp(showRes, 1, 10, 15, 20);
+
+// CALC
+
+// AUX FUNCS
 
 const getPlayerMove = () => {
   const selection = prompt(
@@ -40,7 +79,7 @@ const getPlayerMove = () => {
   ).toUpperCase();
   if (selection !== ROCK && selection !== PAPER && selection !== SCISSORS) {
     alert(`Invalid option! ${DEFAULT_CHOICE} chose by default.`);
-    return DEFAULT_CHOICE;
+    return;
   }
   return selection;
 };
@@ -56,8 +95,7 @@ const compChoice = () => {
   }
 };
 
-
-const getWinner = (cChoice, pChoice) =>
+const getWinner = (cChoice, pChoice = DEFAULT_CHOICE) =>
   cChoice === pChoice
     ? DRAW
     : (cChoice === ROCK && pChoice === PAPER) ||
@@ -76,3 +114,5 @@ const getWinner = (cChoice, pChoice) =>
 // } else {
 //   return COMP_WIN;
 // }
+
+// AUX FUNCS
